@@ -5,6 +5,7 @@ import LocationsRoute from'./locationsRoute'
 import JobsRoute from'./jobsRoute'
 import EmployeesRoute from'./employeesRoute'
 import DependentsRoute from'./dependentsRoute'
+import UsrRoute from './userRoute'
 
 export default {
     RegRoute,
@@ -13,5 +14,6 @@ export default {
     LocationsRoute,
     JobsRoute,
     EmployeesRoute,
-    DependentsRoute
+    DependentsRoute,
+    UsrRoute
 }

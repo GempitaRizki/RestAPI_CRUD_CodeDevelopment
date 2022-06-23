@@ -41,11 +41,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     manager_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'employees',
-        key: 'employee_id'
-      }
+      allowNull: true
     },
     department_id: {
       type: DataTypes.INTEGER,
@@ -54,6 +50,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'departments',
         key: 'department_id'
       }
+    },
+    emp_profile: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

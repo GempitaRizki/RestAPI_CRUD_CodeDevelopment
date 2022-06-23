@@ -34,6 +34,21 @@ const create = async (req,res)=>{
     }
 }
 
+const createNext = async (req,res,next)=>{
+    try {
+        const jobs = await req.context.models.jobs.create({
+            job_id : req.body.job_id,
+            job_title : req.body.job_title,
+            min_salary : req.body.min_salary,
+            max_salary : req.body.max_salary
+        })
+        req.jobs = jobs
+        next()
+    } catch (error) {
+        return res.status(404).send(error)
+    }
+}
+
 const update = async (req,res)=>{
     try {
         const jobs = await req.context.models.jobs.update({
@@ -74,6 +89,7 @@ export default {
     findAll,
     findOne,
     create,
+    createNext,
     update,
     deleted,
     querySQL

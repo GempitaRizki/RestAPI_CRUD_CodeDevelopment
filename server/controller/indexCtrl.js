@@ -5,6 +5,7 @@ import LocationsCtrl from'./locationsCtrl'
 import JobsCtrl from'./jobsCtrl'
 import EmployeesCtrl from'./employeesCtrl'
 import DependentsCtrl from'./dependentsCtrl'
+import userCtrl from './userCtrl'
 
 export default {
     RegCtrl,
@@ -13,5 +14,6 @@ export default {
     LocationsCtrl,
     JobsCtrl,
     EmployeesCtrl,
-    DependentsCtrl
+    DependentsCtrl,
+    userCtrl
 }

@@ -20,6 +20,7 @@ app.use(async(req,res,next)=> {
     req.context = {models}
     next()
 })
+
 app.use('/region',routes.RegRoute)
 app.use('/countries',routes.CountriesRoute)
 app.use('/locations',routes.LocationsRoute)
@@ -27,6 +28,7 @@ app.use('/departments',routes.DepartmentsRoute)
 app.use('/jobs',routes.JobsRoute)
 app.use('/employees',routes.EmployeesRoute)
 app.use('/dependents',routes.DependentsRoute)
+app.use('/user',routes.UsrRoute)
 
 const dropDatabaseSync = false
 

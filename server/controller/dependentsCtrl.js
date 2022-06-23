@@ -21,19 +21,36 @@ const findOne = async (req,res)=>{
 }
 
 const create = async (req,res)=>{
+    const cekEmp = req.employees
     try {
         const dependents = await req.context.models.dependents.create({
             dependent_id : req.body.dependent_id,
             first_name : req.body.first_name,
             last_name : req.body.last_name,
             relationship : req.body.relationship,
-            employee_id : req.body.employee_id
+            employee_id : cekEmp.employee_id
         })
         return res.send(dependents)
     } catch (error) {
         return res.status(404).send(error)
     }
 }
+
+// const create = async (req,res)=>{
+//     try {
+//         const dependents = await req.context.models.dependents.create({
+//             dependent_id : req.body.dependent_id,
+//             first_name : req.body.first_name,
+//             last_name : req.body.last_name,
+//             relationship : req.body.relationship,
+//             employee_id : req.body.employee_id
+//         })
+//         return res.send(dependents)
+//     } catch (error) {
+//         return res.status(404).send(error)
+//     }
+// }
+
 
 const update = async (req,res)=>{
     try {

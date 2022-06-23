@@ -50,6 +50,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'departments',
         key: 'department_id'
       }
+    },
+    emp_profile: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

@@ -6,6 +6,7 @@ var _employees = require("./employees");
 var _jobs = require("./jobs");
 var _locations = require("./locations");
 var _regions = require("./regions");
+var _users = require("./users");
 
 function initModels(sequelize) {
   var countries = _countries(sequelize, DataTypes);
@@ -15,6 +16,7 @@ function initModels(sequelize) {
   var jobs = _jobs(sequelize, DataTypes);
   var locations = _locations(sequelize, DataTypes);
   var regions = _regions(sequelize, DataTypes);
+  var users = _users(sequelize, DataTypes);
 
   locations.belongsTo(countries, { as: "country", foreignKey: "country_id"});
   countries.hasMany(locations, { as: "locations", foreignKey: "country_id"});
@@ -37,6 +39,7 @@ function initModels(sequelize) {
     jobs,
     locations,
     regions,
+    users,
   };
 }
 module.exports = initModels;

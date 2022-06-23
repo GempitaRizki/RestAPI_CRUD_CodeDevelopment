@@ -1,7 +1,7 @@
-import Sequelize from "sequelize";
-import config from './config';
+import sequelize from "sequelize";
+import config from "./config";
 
-const sequelize = new Sequelize(
+const sequelize = new sequelize(
     config.db_name,
     config.db_username,
     config.db_password,
@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
 
 sequelize
     .authenticate()
-    .then(()=>console.log('connection has been estabilished successfully'))
+    .then(() => console.log('connction has been estabilished succesfully'))
     .catch(err => console.log(err))
 
 export {sequelize}

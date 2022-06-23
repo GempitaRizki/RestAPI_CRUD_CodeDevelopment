@@ -2,7 +2,14 @@ import { sequelize } from "../models/init-models"
 
 const findAll = async (req,res)=>{
     try {
-        const locations = await req.context.models.locations.findAll()
+        const locations = await req.context.models.locations.findAll({
+            include: [{
+               // all: true
+               model : req.context.models.departments,
+               as : "departments",
+               require : true
+            }]
+        })
         return res.send(locations)
     } catch (error) {
         return res.status(404).send(error)
@@ -21,6 +28,23 @@ const findOne = async (req,res)=>{
 }
 
 const create = async (req,res)=>{
+    const cekCount = req.countries
+    try {
+        const locations = await req.context.models.locations.create({
+            location_id : req.body.location_id,
+            street_address : req.body.street_address,
+            postal_code : req.body.postal_code,
+            city : req.body.city,
+            state_province : req.body.state_province,
+            country_id : cekCount.country_id
+        })
+        return res.send(locations)
+    } catch (error) {
+        return res.status(404).send(error)
+    }
+}
+
+const createNext = async (req,res,next)=>{
     try {
         const locations = await req.context.models.locations.create({
             location_id : req.body.location_id,
@@ -30,11 +54,28 @@ const create = async (req,res)=>{
             state_province : req.body.state_province,
             country_id : req.body.country_id
         })
-        return res.send(locations)
-    } catch (error) {
+        req.locations = locations
+        next()
+        } catch (error) {
         return res.status(404).send(error)
     }
 }
+
+// const create = async (req,res)=>{
+//     try {
+//         const locations = await req.context.models.locations.create({
+//             location_id : req.body.location_id,
+//             street_address : req.body.street_address,
+//             postal_code : req.body.postal_code,
+//             city : req.body.city,
+//             state_province : req.body.state_province,
+//             country_id : req.body.country_id
+//         })
+//         return res.send(locations)
+//     } catch (error) {
+//         return res.status(404).send(error)
+//     }
+// }
 
 const update = async (req,res)=>{
     try {
@@ -78,6 +119,7 @@ export default {
     findAll,
     findOne,
     create,
+    createNext,
     update,
     deleted,
     querySQL

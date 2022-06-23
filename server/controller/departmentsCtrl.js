@@ -2,7 +2,11 @@ import { sequelize } from "../models/init-models"
 
 const findAll = async (req,res)=>{
     try {
-        const departments = await req.context.models.departments.findAll()
+        const departments = await req.context.models.departments.findAll({
+            include: [{
+               all: true
+            }]
+        })
         return res.send(departments)
     } catch (error) {
         return res.status(404).send(error)
@@ -21,17 +25,45 @@ const findOne = async (req,res)=>{
 }
 
 const create = async (req,res)=>{
+    const cekLoc = req.locations
     try {
         const departments = await req.context.models.departments.create({
             department_id : req.body.department_id,
             department_name : req.body.department_name,
-            location_id : req.body.location_id
+            location_id : cekLoc.location_id
         })
         return res.send(departments)
     } catch (error) {
         return res.status(404).send(error)
     }
 }
+
+const createNext = async (req,res,next)=>{
+    try {
+        const departments = await req.context.models.departments.create({
+            department_id : req.body.department_id,
+            department_name : req.body.department_name,
+            location_id : req.body.location_id
+        })
+        req.departments = departments
+        next()
+    } catch (error) {
+        return res.status(404).send(error)
+    }
+}
+
+// const create = async (req,res)=>{
+//     try {
+//         const departments = await req.context.models.departments.create({
+//             department_id : req.body.department_id,
+//             department_name : req.body.department_name,
+//             location_id : req.body.location_id
+//         })
+//         return res.send(departments)
+//     } catch (error) {
+//         return res.status(404).send(error)
+//     }
+// }
 
 const update = async (req,res)=>{
     try {
@@ -76,6 +108,7 @@ export default {
     findAll,
     findOne,
     create,
+    createNext,
     update,
     deleted,
     querySQL

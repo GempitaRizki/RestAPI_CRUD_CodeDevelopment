@@ -17,13 +17,15 @@ const sequelize = new Sequelize(
 )
 
 const DataTypes = require("sequelize").DataTypes;
-const _countries = require("./countries");
-const _departments = require("./departments");
-const _dependents = require("./dependents");
-const _employees = require("./employees");
-const _jobs = require("./jobs");
-const _locations = require("./locations");
-const _regions = require("./regions");
+const _countries = require("../../schemas/countries");
+const _departments = require("../../schemas/departments");
+const _dependents = require("../../schemas/dependents");
+const _employees = require("../../schemas/employees");
+const _jobs = require("../../schemas/jobs");
+const _locations = require("../../schemas/locations");
+const _regions = require("../../schemas/regions");
+const _users = require("../../schemas/users");
+
 
 function initModels(sequelize) {
   const countries = _countries(sequelize, DataTypes);
@@ -33,6 +35,8 @@ function initModels(sequelize) {
   const jobs = _jobs(sequelize, DataTypes);
   const locations = _locations(sequelize, DataTypes);
   const regions = _regions(sequelize, DataTypes);
+  const users = _users(sequelize, DataTypes);
+
 
   locations.belongsTo(countries, { as: "country", foreignKey: "country_id"});
   countries.hasMany(locations, { as: "locations", foreignKey: "country_id"});
@@ -40,8 +44,6 @@ function initModels(sequelize) {
   departments.hasMany(employees, { as: "employees", foreignKey: "department_id"});
   dependents.belongsTo(employees, { as: "employee", foreignKey: "employee_id"});
   employees.hasMany(dependents, { as: "dependents", foreignKey: "employee_id"});
-  employees.belongsTo(employees, { as: "manager", foreignKey: "manager_id"});
-  employees.hasMany(employees, { as: "employees", foreignKey: "manager_id"});
   employees.belongsTo(jobs, { as: "job", foreignKey: "job_id"});
   jobs.hasMany(employees, { as: "employees", foreignKey: "job_id"});
   departments.belongsTo(locations, { as: "location", foreignKey: "location_id"});
@@ -57,6 +59,7 @@ function initModels(sequelize) {
     jobs,
     locations,
     regions,
+    users
   };
 }
 
